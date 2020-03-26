@@ -1,13 +1,13 @@
 {
-    "author":"",
-    "bugs":"",
+    "author":"Matthew J. Clemente <mjclemente@gmail.com>",
+    "bugs":"https://github.com/mjclemente/custom-command-scaffold/issues",
     "changelog":"",
     "contributors":[],
     "dependencies":{},
     "description":"",
     "devDependencies":{},
     "documentation":"",
-    "homepage":"",
+    "homepage":"https://github.com/mjclemente/custom-command-scaffold",
     "ignore":[
         "**/.*",
         "/test/",
@@ -15,23 +15,23 @@
     ],
     "installPaths":{},
     "instructions":"",
-    "keywords":[],
+    "keywords":["commandbox", "custom command", "scaffold"],
     "license":[
         {
             "type":"",
             "URL":""
         }
     ],
-    "location":"ForgeboxStorage",
-    "name":"Command Scaffold",
+    "location":"mjclemente/custom-command-scaffold#v1.0.0",
+    "name":"Custom Command Scaffold",
     "private":false,
     "projectURL":"",
     "repository":{
-        "type":"",
-        "URL":""
+        "type":"git",
+        "URL":"https://github.com/mjclemente/custom-command-scaffold"
     },
     "scripts":{},
-    "shortDescription":"A sweet package",
+    "shortDescription":"A tool for scaffolding custom command projects.",
     "slug":"commandbox-command-scaffold",
     "testbox":{
         "bundles":"",
@@ -53,5 +53,5 @@
         "watchPaths":"**.cfc"
     },
     "type":"commandbox-modules",
-    "version":"0.0.0"
+    "version":"1.0.0"
 }
