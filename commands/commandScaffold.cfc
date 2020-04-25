@@ -54,7 +54,9 @@ component {
     var commandNameClean = toProperSlug( command );
     var namespaceClean   = toProperSlug( namespace );
     var packageNameClean = toProperSlug( name );
-    var slug = 'commandbox-#packageNameClean#';
+    var slug = packageNameClean.left( 11 ) == 'commandbox-'
+      ? packageNameClean
+      : 'commandbox-#packageNameClean#';
 
     if( !commandNameClean.len() ){
       print.boldRedLine( 'Command name provided was not valid. Please limit names to alphanumeric characters.' );
