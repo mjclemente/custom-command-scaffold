@@ -22,7 +22,7 @@
             "URL":""
         }
     ],
-    "location":"mjclemente/custom-command-scaffold#v1.0.0",
+    "location":"mjclemente/custom-command-scaffold#v1.0.1",
     "name":"Custom Command Scaffold",
     "private":false,
     "projectURL":"",
@@ -53,5 +53,5 @@
         "watchPaths":"**.cfc"
     },
     "type":"commandbox-modules",
-    "version":"1.0.0"
+    "version":"1.0.1"
 }
