@@ -9,7 +9,7 @@ You will need [CommandBox](https://www.ortussolutions.com/products/commandbox) i
 
 From within the terminal, simply run the following command to install the module.
 ```
-$ box install custom-command-scaffold
+$ box install commandbox-command-scaffold
 ```
 
 Once the module is installed, it uses the namespace: `commandScaffold`.
