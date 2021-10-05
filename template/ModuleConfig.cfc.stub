@@ -1,16 +1,172 @@
+ /**
+  * to create a global alias name to call instead of the cfc name you can define them here  
+  * component aliases="ls,ll,directory" {
+  */
 component {
+
+  /**
+   * Module Properties
+   * this.autoMapModels - Will automatically map all model objects under the models folder in WireBox using @modulename as part of the alias.
+   * this.modelNamespace - The name of the namespace to use when registering models in WireBox. Defaults to name of the module.
+   * this.cfmapping - The CF mapping that will be registered for you that points to the root of the module. Defaults to name of the module.
+   * this.disabled - You can manually disable a module from loading and registering.
+   * this.dependencies - An array of dependent module names. All dependencies will be registered and activated FIRST before the module declaring them
+  */
+
+  /**
+   * Injected Variables
+   * The following variables will be created for you in the variables scope
+   * shell          - The shell object (kind of the core CommandBox controller)
+   * moduleMapping  - The component mapping to the module
+   * modulePath     - The physical path to the module
+   * logBox         - The LogBox instance
+   * log            - A named logger, ready to log!
+   * wirebox        - Your friendly neighborhood DI engine
+   * binder         - The WireBox binder, handy for mapping models manually
+   */
+
   function configure(){
+    /**
+     * Module settings
+     *   eg. settings = { checkForUpdates=true };
+     */
     settings = {};
+    
+    // Ad-hoc interception events I will announce myself
+    interceptorSettings = {
+        //customInterceptionPoints = 'launchInitiated,velocityAcheived,singularityAcquired'
+    };
+
+    /**
+     * Interceptors 
+     */
     interceptors = [];
+
+    /* To include Interceptor from an inteceptors directory local to your module
+      var files = directoryList( expandPath( modulePath & '/inteceptors' ) );
+      
+      files.each( function( i ) {
+        interceptors.append( {
+          class : moduleMapping & '.inteceptors.' & i.listLast( '\/' ).listFirst( '.' )
+        } );
+      } );
+    */
+
   }
 
+  /**
+   * onCLIStart
+   * Announced when shell first starts, but before any commands are run or output has been flushed to the console.
+   * interceptData = {
+   *  shellType - The string interactive if starting the interactive shell, or command if running a one-off command and exiting
+   *  args - An array of arguments provided from the OS when box was executed.
+   *  banner - A string containing the CommandBox banner text that displays when in interactive mode.
+   * }
+  */
   function onCLIStart( interceptData ) {}
+
+  /**
+   * onCLIExit
+   * Announced right before the shell exits and control is returned back to the OS. This fires every time the reload command runs right before 
+   * the shell is destroyed and re-created.
+   */
   function onCLIExit() {}
 
-  function preCommandParamProcess( interceptData ) {}
+  /**
+   * onSystemSettingExpansion
+   * Announced every time a system setting in the format of ${something} is expanded. Any interceptor listening can provide an expanded value.
+   * interceptData = {
+   *    setting - The name of the setting with the default value removed.
+   *    defaultValue - The text after the final : or an empty string if there is no default provided
+   *    resolved - Set this to true if your interceptor expands the value and return true from your interceptor method so CommandBox stops the interceptor chain.
+   *    context - A struct of values if this system setting is being expanded in the context of a JSON file.
+   * }
+   */
+  function onSystemSettingExpansion() {}
+
+  /**
+   *  Module specific interceptors 
+   *  Reqiures module to be installed
+   */
+
+  /**
+   * Bullet Train ( install commandbox-bullet-train)
+   * Prettier interative shell prompt for CommandBox
+   * Add your own "train cars" to bullet train with this interceptor
+   * More interceptor example shown here: https://github.com/commandbox-modules/commandbox-bullet-train/
+   */
+  function onBulletTrain( interceptData ) {}    
+
+  /**
+   * Pre and Post Handlers - interceptData provided includes:
+   * interceptData = {
+   *  A struct containing the following keys about the command to execute
+   *  commandInfo: {
+   *     commandString - A string representing the command name
+   *     commandReference - The instantiated Command CFC
+   *     parameters - An array of un-parsed parameter tokens typed in the CLI
+   *     closestHelpCommand - The CFC path to the most-applicable help command. Used to generate namespace help.
+   *  },
+   *  A struct containing the following keys about the processed parameters for the command execution
+   *  parameterInfo : {
+   *     positionalParameters - An array of parameter values
+   *     namedParameters - A struct of name/value pairs. The named parameters are always what is passed to the command's run() method.
+   *     flags - A struct of flags that were passed in.
+   *  }
+   * }
+   */
+
+  /**
+   * preCommand 
+   * Announced before the execution of a command.
+   * This fires after all command parameters have been evaluated, including expressions. 
+   * If piping the output of one command into another in a command chain, this will FIRE TWICE-- once for each command in the chain.
+   * @interceptData (includes commandInfo & parameterInfo )
+   */
   function preCommand( interceptData ) {}
+  
+  /**
+   * preCommandParamProcess 
+   * will fire prior to that so you can affect the system prior to the time the system settings are expanded in parameter values.
+   * interceptData (includes commandInfo & parameterInfo )
+   */
+  function preCommandParamProcess( interceptData ) {}
+
+  /**
+   * postCommand 
+   * Announced immediately after command execution is complete. 
+   * If more than one command is piped together in a command chain, this is announced after each command in the chain.
+   * @interceptData (includes commandInfo & parameterInfo ) + results
+   * interceptData.results - A string that represents any output from the command that hasn't already been flushed to the console.
+   */
   function postCommand( interceptData ) {}
+
+  /**
+   * prePrompt 
+   * Announced prior to drawing the prompt in the interactive shell. 
+   * This interception point can be used to customize the text of the prompt by modifying the prompt variable in intercept 
+   * data which is an ANSI-formatted string to be output before the cursor.
+   */
   function prePrompt( interceptData ) {}
+
+
+  /**
+   * preProcessLine 
+   * Command fired before EACH command
+   *   eg. echo `package show name` -> fired twice, once for package command, once for echo command
+   * interceptData = {
+   *    line - A string representing the line typed into the shell. Changing the contents of this string will override what actually gets executed.
+   * }
+   */
   function preProcessLine( interceptData ) {}
+
+  /**
+   * postProcessLine 
+   * Command fired after EACH command
+   *   eg. echo `package show name` -> fired twice, once for package command, once for echo command
+   * interceptData = {
+   *    line - A string representing the line typed into the shell. Changing the contents of this string will override what actually gets executed.
+   * }
+   */
   function postProcessLine( interceptData ) {}
 }
