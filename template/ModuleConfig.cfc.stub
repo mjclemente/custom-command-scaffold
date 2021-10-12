@@ -86,7 +86,7 @@ component {
 
   /**
    *  Module specific interceptors 
-   *  Reqiures module to be installed
+   *  Reqiures module to be installed otherwise the interceptor will not be called
    */
 
   /**
