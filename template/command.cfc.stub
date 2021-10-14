@@ -4,16 +4,80 @@
 *
 * {code:bash}
 * @@commandName@@ param1
+* @@commandName@@ param1="test"
 * {code} 
 * 
+* @param1.hint Description of the first parameter
 * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/tab-completion-and-help
 **/
 component {
+  /**
+   * Automatic Dependencies available
+   * 
+   * Shell: shell.clearScreen(), shell.getTermWidth(), shell.getTermHeight()
+   * tempDir: temporary directory path
+   * 
+   * formatterUtil
+   * HTML2ANSI, MD2ANSI, ansifyHTML, formatJson, slugify, unescapeHTML
+   * https://s3.amazonaws.com/apidocs.ortussolutions.com/commandbox-core/5.4.2/commandbox/system/util/Formatter.html
+   * 
+   * ModuleService
+   * Default settings from ModuleConfig.cfc or user overrides
+   * 
+   * ConfigService
+   * getConfigSettings, getSetting, setSetting, settingExists, etc...
+   * https://s3.amazonaws.com/apidocs.ortussolutions.com/commandbox-core/5.4.2/commandbox/system/services/ConfigService.html
+   * 
+   * Import Dependencies
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/injection-dsl
+   * property name='systemSettings' inject='systemSettings'; //access to individual system settings
+   * property name="moduleSettings" inject="commandbox:moduleSettings:commandbox-dotenv"; //Default settings from ModuleConfig.cfc or user overrides
+   */
   
   /**
-  * @param1.hint Description of the first parameter
-  */
+   * @param1.hint Description of the first parameter
+   * @param1.options Tom,John,Sarah
+   */
   function run( required String param1 ){
-      return 'Hello World!'; 
+      return 'Thanks for playing #param1#!'; 
   }
+ 
+  /**
+   * Command Output to the console
+   * print.line(), print.text(), print.boldText(), etc... 
+   * Ex. print.Line( 'Step 1 complete' ).toConsole(); // force printing to console immediately
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/command-output
+   * 
+   * Interactivity
+   * ask(), waitForKey(), confirm(), Multiselect input
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/interactivity
+   * 
+   * Watchers: watch()
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/watchers
+   * 
+   * Shell Intergration
+   * getCWD() Current Working Directory, runCommand(), 
+   * shell.clearScreen(), shell.getTermWidth(), shell.getTermHeight()
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/shell-integration
+   * 
+   * Running Other Commands: command()
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/running-other-commands
+   * 
+   * Loading Ad hoc Jars: classLoad( [ 'C:/myLibs/myLib.jar', 'C:/otherLibs/other.class' ] );
+   * https://commandbox.ortusbooks.com/developing-for-commandbox/commands/loading-ad-hoc-jars
+   * 
+   * Smart Tab Complete
+   * Dynamically return auto complete options 
+   * return an ARRAY of (REQUIRED name, group, description) 
+   * 
+      array function completeTypes() {
+        return [
+          { name:'type1', group:'Types', description:'This is Type 1' },
+          { name:'type2', group:'Types', description:'This is Type 2' },
+          { name:'type3', group:'Types', description:'This is Type 3' }
+        ];
+      }
+   */
+
+
 }
